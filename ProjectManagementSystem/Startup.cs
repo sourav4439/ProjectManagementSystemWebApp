@@ -6,9 +6,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProjectManagementSystem.Data;
+using ProjectManagementSystem.Models;
 
 namespace ProjectManagementSystem
 {
@@ -30,7 +35,12 @@ namespace ProjectManagementSystem
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            services.AddDbContextPool<AppDbContext>(
+                option=>option.UseSqlServer(Configuration.GetConnectionString("ProjectmanagementDBConnection")));
+            services.AddIdentity<ApplicationUsers, IdentityRole>(
+                    options => options.Stores.MaxLengthForKeys = 128)
+                .AddEntityFrameworkStores<AppDbContext>();
+                
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -51,8 +61,9 @@ namespace ProjectManagementSystem
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            
             app.UseCookiePolicy();
-
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
