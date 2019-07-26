@@ -16,7 +16,7 @@ namespace ProjectManagementSystem.Models
         [StringLength(15)]
         public string Name { get; set; }
         [Required]
-        public bool Status { get; set; }
+        public string Status { get; set; }
         [Required]
         public string Designation { get; set; }
 

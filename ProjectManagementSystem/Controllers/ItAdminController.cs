@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProjectManagementSystem.Data;
@@ -36,7 +37,8 @@ namespace ProjectManagementSystem.Controllers
         // GET: ItAdmin
         public ActionResult Index()
         {
-            return View();
+            var alluser = _usermanager.Users.ToList();
+            return View(alluser);
         }
 
         // GET: ItAdmin/Details/5
@@ -48,13 +50,16 @@ namespace ProjectManagementSystem.Controllers
         // GET: ItAdmin/Create
         public ActionResult AddUser()
         {
+            ViewBag.designation=_role.Roles.Select(r=> new SelectListItem{Value = r.Id,Text = r.Name}).ToList();
             return View();
         }
 
-        // POST: ItAdmin/Create
+     
         [HttpPost] 
         public async Task<IActionResult> AddUser(UserInfoViewModel model )
         {
+          var role= await _role.FindByIdAsync(model.RoleId);
+
             if (ModelState.IsValid)
             {
               
@@ -63,7 +68,7 @@ namespace ProjectManagementSystem.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                     Name = model.Name,
-                   Designation = model.Designation.ToString(),
+                    Designation = role.Name,
                    Status = model.Status,
                    PasswordHash = model.Password
                    
@@ -75,9 +80,8 @@ namespace ProjectManagementSystem.Controllers
                 var result = await _usermanager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                 await _role.CreateAsync(new IdentityRole(user.Designation));
 
-                  await _usermanager.AddToRoleAsync(user, user.Designation);
+                  await _usermanager.AddToRoleAsync(user,role.Name);
                     return RedirectToAction("Index");
                 }
                 foreach (var error in result.Errors)
@@ -88,16 +92,16 @@ namespace ProjectManagementSystem.Controllers
             return View();
         }
 
-        // GET: ItAdmin/Edit/5
-        public ActionResult Edit(int id)
+        
+        public ActionResult UpdateUser(int id)
         {
             return View();
         }
 
-        // POST: ItAdmin/Edit/5
+     
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult UpdateUser(int id, IFormCollection collection)
         {
             try
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace ProjectManagementSystem.Models
 {
@@ -12,12 +13,14 @@ namespace ProjectManagementSystem.Models
         [StringLength(15)]
 
         public string Name { get; set; }
-        [Required]
 
-        public bool Status { get; set; }
         [Required]
-
-        public Designation Designation { get; set; }
+        public string Status { get; set; }
+       
+        public IdentityRole Role { get; set; }
+        [Required]
+        [Display(Name = "Designation")]
+        public string RoleId { get; set; }
 
         [Required]
         [EmailAddress]
@@ -29,15 +32,5 @@ namespace ProjectManagementSystem.Models
 
     }
 
-    public enum Designation
-    {
-        ItAdmin,
-        Projectmanager,
-        TeamLead,
-        QaEngineer,
-        UxEngineer,
-        Developer,
-        
-
-    }
+    
 }
