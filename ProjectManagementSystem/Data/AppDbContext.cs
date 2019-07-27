@@ -18,6 +18,8 @@ namespace ProjectManagementSystem.Data
             
         }
 
+        public DbSet<ProjectInfo> ProjectInfos { get; set; }
+
 
        
     }

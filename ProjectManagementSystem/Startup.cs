@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectManagementSystem.Data;
+using ProjectManagementSystem.Data.Interfaces;
+using ProjectManagementSystem.Data.Repository;
 using ProjectManagementSystem.Models;
 
 namespace ProjectManagementSystem
@@ -40,6 +42,7 @@ namespace ProjectManagementSystem
             services.AddIdentity<ApplicationUsers, IdentityRole>(
                     options => options.Stores.MaxLengthForKeys = 128)
                 .AddEntityFrameworkStores<AppDbContext>();
+            services.AddTransient<IProjectmanagerRepo,ProjectmanagerRepo>();
                 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
