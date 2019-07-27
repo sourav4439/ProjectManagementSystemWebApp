@@ -37,5 +37,8 @@ namespace ProjectManagementSystem.Models
         [Required]
         public IFormFile Uploadfile { get; set; }
 
+        public IEnumerable<ApplicationUsers> Users{ get; set; }
+
+
     }
 }

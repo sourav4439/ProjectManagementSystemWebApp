@@ -20,6 +20,8 @@ namespace ProjectManagementSystem.Data
 
         public DbSet<ProjectInfo> ProjectInfos { get; set; }
 
+        public DbSet<ProjectManagementSystem.Models.UserInfoViewModel> UserInfoViewModel { get; set; }
+
 
        
     }

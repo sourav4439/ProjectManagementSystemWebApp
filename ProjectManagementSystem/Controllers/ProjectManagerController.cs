@@ -20,6 +20,14 @@ namespace ProjectManagementSystem.Controllers
             _projectmanagerRepo = projectmanagerRepo;
             _iHostingEnvironment = iHostingEnvironment;
         }
+
+        public IActionResult Index()
+        {
+            var project = _projectmanagerRepo.GetAll();
+            return View(project);
+        }
+
+
         [HttpGet]
         public IActionResult AddProject()
         {
@@ -32,7 +40,7 @@ namespace ProjectManagementSystem.Controllers
             if (projectInfo.Uploadfile != null)
             {
                 string userphotofolder = Path.Combine(_iHostingEnvironment.WebRootPath,"ProjectFile");
-                uploadfilename = Guid.NewGuid().ToString() + "_" + projectInfo.Uploadfile.FileName;
+                uploadfilename = Guid.NewGuid().ToString() + "_" + projectInfo.Name+"_" + projectInfo.Uploadfile.FileName;
                 string filepath = Path.Combine(userphotofolder, uploadfilename);
                 projectInfo.Uploadfile.CopyTo(new FileStream(filepath, FileMode.Create));
             }
@@ -41,8 +49,37 @@ namespace ProjectManagementSystem.Controllers
             if (ModelState.IsValid)
             {
                 _projectmanagerRepo.Create(projectInfo);
+                return RedirectToAction("Index");
             }
             return View();
         }
+        [HttpGet]
+        public IActionResult EditProject(int id)
+        {
+          var project=  _projectmanagerRepo.GetById(id);
+            return View(project);
+        }
+        [HttpPost]
+        public IActionResult EditProject(ProjectInfo projectInfo)
+        {
+            string uploadfilename = null;
+            if (projectInfo.Uploadfile != null)
+            {
+                string userphotofolder = Path.Combine(_iHostingEnvironment.WebRootPath, "ProjectFile");
+                uploadfilename = Guid.NewGuid().ToString() + "_"+projectInfo.Name+"_" + projectInfo.Uploadfile.FileName;
+                string filepath = Path.Combine(userphotofolder, uploadfilename);
+                projectInfo.Uploadfile.CopyTo(new FileStream(filepath, FileMode.Create));
+            }
+
+            projectInfo.UploadFilePath = uploadfilename;
+            if (ModelState.IsValid)
+            {
+                _projectmanagerRepo.Update(projectInfo);
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
+
     }
 }

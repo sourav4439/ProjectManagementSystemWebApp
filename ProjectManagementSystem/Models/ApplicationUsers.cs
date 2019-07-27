@@ -20,6 +20,8 @@ namespace ProjectManagementSystem.Models
         [Required]
         public string Designation { get; set; }
 
+        public IEnumerable<ProjectInfo> ProjectInfos { get; set; }
+
        
     }
 }
