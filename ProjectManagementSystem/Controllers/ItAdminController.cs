@@ -92,36 +92,82 @@ namespace ProjectManagementSystem.Controllers
             return View();
         }
 
-        
-        public ActionResult UpdateUser(int id)
+        [HttpGet]
+        public async Task<IActionResult> UpdateUser(string id)
         {
-            return View();
+          var user= await _usermanager.FindByIdAsync(id);
+          ViewBag.designation = _role.Roles.Select(r => new SelectListItem { Value = r.Id, Text = r.Name }).ToList();
+          var role = _role.Roles.SingleOrDefault(r => r.Name == user.Designation);
+         
+          
+              UserInfoViewModel userInfo = new UserInfoViewModel
+              {
+                  Id = user.Id,
+                  Name = user.Name,
+                  Status = user.Status,
+                  Email = user.Email,
+                  Password =user.PasswordHash ,
+                  RoleId = role.Id
+              
+              
+              
+              };
+              return View(userInfo);
+          
         }
 
      
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateUser(int id, IFormCollection collection)
+        public async Task<IActionResult> UpdateUser(UserInfoViewModel model)
         {
-            try
-            {
-                // TODO: Add update logic here
+            var role = await _role.FindByIdAsync(model.RoleId);
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+            if (ModelState.IsValid)
             {
-                return View();
+                var user = await _usermanager.FindByIdAsync(model.Id);
+
+                user.UserName = model.Email;
+                user.Email = model.Email;
+                user.Name = model.Name;
+                user.Designation = role.Name;
+                user.Status = model.Status;
+                user.PasswordHash = model.Password;
+
+                var result = await _usermanager.UpdateAsync(user);
+
+
+                if (result.Succeeded)
+                {
+                    if (await _usermanager.IsInRoleAsync(user,role.Name))
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                      var oldrole= await _usermanager.GetRolesAsync(user);
+                      await _usermanager.RemoveFromRolesAsync(user, oldrole);
+
+                        var r= await _usermanager.AddToRoleAsync(user, user.Designation);
+
+                        if (r.Succeeded)
+                        {
+                            return RedirectToAction("Index");
+                        }
+                    }
+                   
+                }
+                
             }
+            return View();
         }
 
-        // GET: ItAdmin/Delete/5
+        
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: ItAdmin/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
@@ -137,5 +183,11 @@ namespace ProjectManagementSystem.Controllers
                 return View();
             }
         }
-    }
+
+
+
+
+      
+}
+
 }

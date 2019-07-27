@@ -9,6 +9,7 @@ namespace ProjectManagementSystem.Models
 {
     public class UserInfoViewModel
     {
+        public string Id { get; set; }
         [Required]
         [StringLength(15)]
 
