@@ -20,9 +20,23 @@ namespace ProjectManagementSystem.Data
 
         public DbSet<ProjectInfo> ProjectInfos { get; set; }
 
-        public DbSet<ProjectManagementSystem.Models.UserInfoViewModel> UserInfoViewModel { get; set; }
+        public DbSet<ProjectInfoUsers> ProjectInfoUserses { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<ProjectInfoUsers>().HasKey(pu => new { pu.ApplicationUserId, pu.ProjectInfoId });
+
+           builder.Entity<ProjectInfoUsers>()
+                .HasOne<ApplicationUsers>(a => a.ApplicationUsers)
+                .WithMany(s => s.ProjectInfoUserses)
+                .HasForeignKey(sc => sc.ApplicationUserId);
 
 
-       
+            builder.Entity<ProjectInfoUsers>()
+                .HasOne<ProjectInfo>(p => p.ProjectInfo)
+                .WithMany(p => p.ProjectInfoUserses)
+                .HasForeignKey(pc => pc.ProjectInfoId);
+        }
     }
 }

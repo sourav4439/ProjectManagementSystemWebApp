@@ -31,13 +31,15 @@ namespace ProjectManagementSystem.Models
         public string UploadFilePath { get; set; }
         [Required]
         public string Status { get; set; }
+        
 
         [NotMapped]
         [Display(Name = "Upload File")]
         [Required]
         public IFormFile Uploadfile { get; set; }
 
-        public IEnumerable<ApplicationUsers> Users{ get; set; }
+        public virtual ICollection<ProjectInfoUsers> ProjectInfoUserses { get; set; }
+
 
 
     }
