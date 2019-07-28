@@ -9,56 +9,56 @@ namespace ProjectManagementSystem.Data.Repository
 {
     public class Repository<T>:IRepository<T> where T:class
     {
-        private readonly AppDbContext Db;
+        protected readonly AppDbContext db;
 
         public Repository(AppDbContext dbContext)
         {
-           Db=dbContext;
+           db=dbContext;
         }
         public int Count(Func<T, bool> predicate)
         {
-            return Db.Set<T>().Where(predicate).Count();
+            return db.Set<T>().Where(predicate).Count();
 
         }
 
 
         public void Create(T entity)
         {
-            Db.Add(entity);
+            db.Add(entity);
             Save();
         }
         public void Delete(T entity)
         {
-            Db.Remove(entity);
+            db.Remove(entity);
             Save();
         }
 
         public IEnumerable<T> Find(Func<T, bool> predicate)
         {
-            return Db.Set<T>().Where(predicate);
+            return db.Set<T>().Where(predicate);
         }
 
         public IEnumerable<T> GetAll()
         {
-            return Db.Set<T>();
+            return db.Set<T>();
         }
 
         public T GetById(int id)
         {
-            return Db.Set<T>().Find(id);
+            return db.Set<T>().Find(id);
         }
 
 
 
         public void Update(T entity)
         {
-            Db.Entry(entity).State = EntityState.Modified;
+            db.Entry(entity).State = EntityState.Modified;
             Save();
         }
 
         protected void Save()
         {
-            Db.SaveChanges();
+            db.SaveChanges();
         }
     }
 }

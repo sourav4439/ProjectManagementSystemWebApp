@@ -43,6 +43,7 @@ namespace ProjectManagementSystem
                     options => options.Stores.MaxLengthForKeys = 128)
                 .AddEntityFrameworkStores<AppDbContext>();
             services.AddTransient<IProjectmanagerRepo,ProjectmanagerRepo>();
+            services.AddTransient<IProjectUsersRepo,ProjectUserRepo>();
                 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

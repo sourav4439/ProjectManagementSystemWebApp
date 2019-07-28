@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ProjectManagementSystem.Models.ProjectInfoUsers>
+
+@{
+    ViewData["Title"] = "AssignResourcePersonList";
+}
+
+<h1>AssignResourcePersonList</h1>
+
+<p>
+    <a asp-action="AssignResourcePerson">Create New</a>
+</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectInfo.Name)
+        </th>
+        <th>
+            Resource Person
+        </th>
+
+
+        <th>@Html.DisplayNameFor(model => model.ApplicationUsers.Designation)</th>
+        
+    </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectInfo.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApplicationUsers.Name)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.ApplicationUsers.Designation)
+        </td>
+       
+    </tr>
+}
+    </tbody>
+</table>

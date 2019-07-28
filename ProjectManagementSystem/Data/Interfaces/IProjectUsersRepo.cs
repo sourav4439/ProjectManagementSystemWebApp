@@ -6,7 +6,8 @@ using ProjectManagementSystem.Models;
 
 namespace ProjectManagementSystem.Data.Interfaces
 {
-    interface IProjectUsersRepo:IRepository<ProjectInfoUsers>
-    {
-    }
+   public interface IProjectUsersRepo:IRepository<ProjectInfoUsers>
+   {
+       ICollection<ProjectInfoUsers> GetALlIncludeProjectAndResourseperson();
+   }
 }

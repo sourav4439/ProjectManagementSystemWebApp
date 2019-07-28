@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjectManagementSystem.Data.Interfaces;
 using ProjectManagementSystem.Models;
 
@@ -14,11 +16,17 @@ namespace ProjectManagementSystem.Controllers
     {
         private readonly IProjectmanagerRepo _projectmanagerRepo;
         private readonly IHostingEnvironment _iHostingEnvironment;
+        private readonly IProjectUsersRepo _projectUsersRepo;
+        private readonly UserManager<ApplicationUsers> _userManager;
 
-        public ProjectManagerController(IProjectmanagerRepo projectmanagerRepo,IHostingEnvironment iHostingEnvironment)
+        public ProjectManagerController(IProjectmanagerRepo projectmanagerRepo,
+            IHostingEnvironment iHostingEnvironment,
+            IProjectUsersRepo projectUsersRepo,UserManager<ApplicationUsers> userManager)
         {
             _projectmanagerRepo = projectmanagerRepo;
             _iHostingEnvironment = iHostingEnvironment;
+            _projectUsersRepo = projectUsersRepo;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -79,6 +87,37 @@ namespace ProjectManagementSystem.Controllers
             }
             return View();
         }
+
+
+        [HttpGet]
+        public IActionResult AssignResourcePerson()
+        {
+            ViewBag.ApplicationUserId=_userManager.Users.Select(u=>new SelectListItem{Value = u.Id,Text = u.Name}).ToList();
+            ViewBag.ProjectInfoId = _projectmanagerRepo.GetAll().Select(p=>new SelectListItem{Value = p.Id.ToString(),Text = p.Name}).ToList();
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AssignResourcePerson([Bind("ApplicationUserId,ProjectInfoId")] ProjectInfoUsers pusers)
+        {
+           
+            if (ModelState.IsValid)
+            {
+              _projectUsersRepo.Create(pusers);
+              return RedirectToAction("AssignResourcePersonList");
+            }
+            ViewBag.ApplicationUserId = _userManager.Users.Select(u => new SelectListItem { Value = u.Id, Text = u.Name }).ToList();
+            ViewBag.ProjectInfoId = _projectmanagerRepo.GetAll().Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name }).ToList();
+
+            return View(pusers);
+        }
+        [HttpGet]
+        public IActionResult AssignResourcePersonList()
+        {
+            var allassifnproject = _projectUsersRepo.GetALlIncludeProjectAndResourseperson();
+            return View(allassifnproject);
+        }
+
+
 
 
     }
