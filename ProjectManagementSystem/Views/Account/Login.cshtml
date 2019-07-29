@@ -1,0 +1,52 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+@section Style
+    {
+
+    <link href="~/css/Login.css" rel="stylesheet" asp-append-version="true" />
+}
+
+<form method="post" asp-action="Login" asp-controller="Account">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div id="login-box">
+        <div class="left">
+            <h1>LOG IN</h1>
+
+
+            <input type="text" asp-for="Email" placeholder="E-mail" />
+
+            <span asp-validation-for="Email" class="text-danger"></span>
+
+            <input asp-for="Password" placeholder="Password" />
+
+            <span asp-validation-for="Password" class="text-danger"></span>
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label asp-for="RememberMe">
+                        <input asp-for="RememberMe" />
+                        @Html.DisplayNameFor(m => m.RememberMe)
+                    </label>
+                </div>
+            </div>
+            <input type="submit" value="Login" />
+            
+
+        </div>
+       
+
+    </div>
+
+
+</form>
+
+
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

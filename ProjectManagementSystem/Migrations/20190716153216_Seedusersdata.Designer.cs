@@ -175,7 +175,7 @@ namespace ProjectManagementSystem.Migrations
 
                     b.Property<string>("SecurityStamp");
 
-                    b.Property<bool>("Status");
+                    b.Property<string>("Status");
 
                     b.Property<bool>("TwoFactorEnabled");
 

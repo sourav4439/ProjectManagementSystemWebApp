@@ -132,7 +132,7 @@ namespace ProjectManagementSystem.Controllers
                 user.Name = model.Name;
                 user.Designation = role.Name;
                 user.Status = model.Status;
-                user.PasswordHash = model.Password;
+                user.PasswordHash = _usermanager.PasswordHasher.HashPassword(user,model.Password);
 
                 var result = await _usermanager.UpdateAsync(user);
 
