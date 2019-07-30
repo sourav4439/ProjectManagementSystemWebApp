@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<ApplicationUsers> SignInManager
+@inject UserManager<ApplicationUsers> UserManager
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -35,12 +37,61 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
-                        </li>
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("ItAdmin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="ItAdmin" asp-action="Index">User List</a>
+                            </li>
+                        }
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Projectmanager"))
+                        {
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Manage Project
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" asp-controller="Projectmanager" asp-action="Index">Project List</a>
+                                    <a class="dropdown-item" asp-controller="Projectmanager" asp-action="AddProject">Add Project</a>
+                                    <a class="dropdown-item" asp-controller="Projectmanager" asp-action="AssignResourcePersonList">Assigned Resource Person List</a>
+                                    <a class="dropdown-item" asp-controller="Projectmanager" asp-action="AssignResourcePerson">Assign Resource Person</a>
+
+                                </div>
+                            </li>
+
+                        }
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Projectmanager"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">View Project</a>
+                            </li>
+                           
+
+                        }
+
+
+
                     </ul>
+                           
+                     
                 </div>
             </div>
+            <ul class="navbar-nav ml-auto">
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout @UserManager.GetUserName(User)</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                    </li>
+                }
+                        
+            </ul>
         </nav>
     </header>
     <div class="container">

@@ -21,7 +21,8 @@ namespace ProjectManagementSystem.Controllers
 
         public ProjectManagerController(IProjectmanagerRepo projectmanagerRepo,
             IHostingEnvironment iHostingEnvironment,
-            IProjectUsersRepo projectUsersRepo,UserManager<ApplicationUsers> userManager)
+            IProjectUsersRepo projectUsersRepo,
+            UserManager<ApplicationUsers> userManager)
         {
             _projectmanagerRepo = projectmanagerRepo;
             _iHostingEnvironment = iHostingEnvironment;
