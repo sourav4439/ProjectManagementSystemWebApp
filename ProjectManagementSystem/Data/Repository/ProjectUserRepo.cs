@@ -20,5 +20,11 @@ namespace ProjectManagementSystem.Data.Repository
                 .Include(a => a.ApplicationUsers)
                 .Include(p => p.ProjectInfo).ToList();
         }
+
+        public ICollection<ProjectInfoUsers> GetprojectByUserId(string userId)
+        {
+           return db.ProjectInfoUserses.Include(p => p.ProjectInfo)
+                .Where(u => u.ApplicationUserId == userId).ToList();
+        }
     }
 }

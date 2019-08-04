@@ -9,5 +9,7 @@ namespace ProjectManagementSystem.Data.Interfaces
    public interface IProjectUsersRepo:IRepository<ProjectInfoUsers>
    {
        ICollection<ProjectInfoUsers> GetALlIncludeProjectAndResourseperson();
+       ICollection<ProjectInfoUsers> GetprojectByUserId(string userId);
+
    }
 }

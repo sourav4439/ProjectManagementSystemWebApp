@@ -61,10 +61,10 @@
                             </li>
 
                         }
-                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Projectmanager"))
+                        @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">View Project</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="ViewProjects">View Project</a>
                             </li>
                            
 
