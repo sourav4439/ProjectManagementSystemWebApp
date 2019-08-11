@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ProjectManagementSystem.Models;
+using Task = ProjectManagementSystem.Models.Task;
 
 namespace ProjectManagementSystem.Data
 {
@@ -21,6 +22,7 @@ namespace ProjectManagementSystem.Data
         public DbSet<ProjectInfo> ProjectInfos { get; set; }
 
         public DbSet<ProjectInfoUsers> ProjectInfoUserses { get; set; }
+        public DbSet<Task> Tasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

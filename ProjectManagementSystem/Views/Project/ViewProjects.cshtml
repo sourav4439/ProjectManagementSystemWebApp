@@ -20,10 +20,12 @@
             </th>
             <th>No Of Member</th>
             <th>No Of Task</th>
+            <th>Details</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
+        
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.ProjectInfo.Name)
@@ -32,10 +34,11 @@
                 @Html.DisplayFor(modelItem => item.ProjectInfo.CodeName)
             </td>
             <td>@Html.DisplayFor(modelItem => item.ProjectInfo.Status)</td>
-            <td>@ProjectUsersRepo.Count(p=>p.ProjectInfoId==item.ProjectInfoId)</td>
-            <td>@ProjectUsersRepo.Count(p=>p.ProjectInfoId==item.ProjectInfoId)</td>
-            
+            <td>@ProjectUsersRepo.Count(p => p.ProjectInfoId == item.ProjectInfoId)</td>
+            <td>@ProjectUsersRepo.Count(p => p.ProjectInfoId == item.ProjectInfoId)</td>
+            <td><a asp-action="ProjectDetails" asp-controller="Project" asp-route-id="@item.ProjectInfoId">View</a></td>
         </tr>
+        
 }
     </tbody>
 </table>

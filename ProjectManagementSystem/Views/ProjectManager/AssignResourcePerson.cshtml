@@ -17,12 +17,14 @@
                 <select asp-for="ApplicationUserId" class="form-control" asp-items="ViewBag.ApplicationUserId">
                     <option>Select A Resource Person</option>
                 </select>
+                <span asp-validation-for="ApplicationUserId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ProjectInfoId" class="control-label"></label>
                 <select asp-for="ProjectInfoId" class="form-control" asp-items="ViewBag.ProjectInfoId">
                     <option> Select A Project</option>
-                </select>
+                </select> 
+                <span asp-validation-for="ProjectInfoId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="ADD" class="btn btn-primary" />

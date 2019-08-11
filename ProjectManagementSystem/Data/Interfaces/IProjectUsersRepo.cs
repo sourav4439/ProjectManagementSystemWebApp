@@ -10,6 +10,7 @@ namespace ProjectManagementSystem.Data.Interfaces
    {
        ICollection<ProjectInfoUsers> GetALlIncludeProjectAndResourseperson();
        ICollection<ProjectInfoUsers> GetprojectByUserId(string userId);
-
+       ICollection<ProjectInfoUsers> GetuserbyprojectId(int projectId);
+       bool IsAssigned(string userid, int projectid);
    }
 }

@@ -44,6 +44,7 @@ namespace ProjectManagementSystem
                 .AddEntityFrameworkStores<AppDbContext>();
             services.AddTransient<IProjectmanagerRepo,ProjectmanagerRepo>();
             services.AddTransient<IProjectUsersRepo,ProjectUserRepo>();
+            services.AddTransient<ITaskRepo,TaskRepo>();
                 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

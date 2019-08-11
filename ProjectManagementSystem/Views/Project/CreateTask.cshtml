@@ -1,0 +1,89 @@
+﻿@model ProjectManagementSystem.Models.Task
+@inject IProjectUsersRepo ProjectUsersRepo
+
+
+
+@{
+    ViewData["Title"] = "CreateTask";
+    var userId = ViewBag.GetUserId;
+    var projecid = ViewBag.Projectid;
+}
+@section Style
+{
+
+    <link href="~/lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet" />
+}
+@if (ProjectUsersRepo.IsAssigned(userId, projecid))
+{
+    <h1>CreateTask</h1>
+
+    <h4>Task</h4>
+    <hr/>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="CreateTask">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="ProjectinfoId" class="control-label"></label>
+                    <select asp-for="ProjectinfoId" class="form-control" asp-items="ViewBag.ProjectinfoId">
+                        <option>Select A Project</option>
+                    </select>
+                    <span asp-validation-for="ProjectinfoId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ApplicationUserId" class="control-label"></label>
+                    <select asp-for="ApplicationUserId" class="form-control" asp-items="ViewBag.ApplicationUserId">
+                        <option>Select A Member</option>
+                    </select>
+                    <span asp-validation-for="ApplicationUserId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control">
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DueDate" class="control-label"></label>
+                    <input asp-for="DueDate" class="form-control"/>
+                    <span asp-validation-for="DueDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Priority" class="control-label"></label>
+                    <input type="radio" asp-for="Priority" value="High"/>High
+                    <input type="radio" asp-for="Priority" value="Medium"/>Medium
+                    <input type="radio" asp-for="Priority" value="Low"/>Low
+                    <span asp-validation-for="Priority" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary"/>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+}
+else{
+    <h1>You cannot create any task you are this project team member</h1>
+}
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#DueDate").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                firstDay: 1,
+                dateFormat: 'dd/mm/yy',
+                showButtonPanel: true
+            });
+
+            $("#DueDate").datepicker({ dateFormat: 'dd-mm-yy' });
+            
+
+        });
+    </script>
+}

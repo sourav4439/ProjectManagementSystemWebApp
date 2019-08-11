@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ProjectManagementSystem.Models;
+using Task = ProjectManagementSystem.Models.Task;
 
 namespace ProjectManagementSystem.Data.Interfaces
 {
-   public interface IProjectmanagerRepo:IRepository<ProjectInfo>
+   public interface ITaskRepo:IRepository<Task>
     {
-
     }
 }
