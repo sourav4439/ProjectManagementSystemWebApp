@@ -247,10 +247,8 @@ namespace ProjectManagementSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ApplicationUserId")
+                    b.Property<string>("ApplicationUsersId")
                         .IsRequired();
-
-                    b.Property<string>("ApplicationUsersId");
 
                     b.Property<string>("Description")
                         .IsRequired();
@@ -334,7 +332,8 @@ namespace ProjectManagementSystem.Migrations
                 {
                     b.HasOne("ProjectManagementSystem.Models.ApplicationUsers", "ApplicationUsers")
                         .WithMany()
-                        .HasForeignKey("ApplicationUsersId");
+                        .HasForeignKey("ApplicationUsersId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ProjectManagementSystem.Models.ProjectInfo", "ProjectInfo")
                         .WithMany()

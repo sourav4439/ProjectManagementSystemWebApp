@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProjectManagementSystem.Migrations
 {
-    public partial class AddTask : Migration
+    public partial class AddTaskmodel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,8 +14,7 @@ namespace ProjectManagementSystem.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ProjectinfoId = table.Column<int>(nullable: false),
-                    ApplicationUserId = table.Column<string>(nullable: false),
-                    ApplicationUsersId = table.Column<string>(nullable: true),
+                    ApplicationUsersId = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: false),
                     DueDate = table.Column<string>(nullable: false),
                     Priority = table.Column<string>(nullable: false)
@@ -28,7 +27,7 @@ namespace ProjectManagementSystem.Migrations
                         column: x => x.ApplicationUsersId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Tasks_ProjectInfos_ProjectinfoId",
                         column: x => x.ProjectinfoId,

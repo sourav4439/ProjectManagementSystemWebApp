@@ -10,8 +10,8 @@ using ProjectManagementSystem.Data;
 namespace ProjectManagementSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190804185723_AddTask")]
-    partial class AddTask
+    [Migration("20190813174003_AddTaskmodel")]
+    partial class AddTaskmodel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -249,10 +249,8 @@ namespace ProjectManagementSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ApplicationUserId")
+                    b.Property<string>("ApplicationUsersId")
                         .IsRequired();
-
-                    b.Property<string>("ApplicationUsersId");
 
                     b.Property<string>("Description")
                         .IsRequired();
@@ -336,7 +334,8 @@ namespace ProjectManagementSystem.Migrations
                 {
                     b.HasOne("ProjectManagementSystem.Models.ApplicationUsers", "ApplicationUsers")
                         .WithMany()
-                        .HasForeignKey("ApplicationUsersId");
+                        .HasForeignKey("ApplicationUsersId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ProjectManagementSystem.Models.ProjectInfo", "ProjectInfo")
                         .WithMany()

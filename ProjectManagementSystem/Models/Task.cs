@@ -11,9 +11,12 @@ namespace ProjectManagementSystem.Models
         public int Id { get; set; }
         [Required]
         public int ProjectinfoId { get; set; }
+
         public ProjectInfo ProjectInfo { get; set; }
+
         [Required]
-        public string ApplicationUserId { get; set; }
+        public string ApplicationUsersId { get; set; }
+
         public ApplicationUsers ApplicationUsers { get; set; }
         [Required]
         public string Description { get; set; }
