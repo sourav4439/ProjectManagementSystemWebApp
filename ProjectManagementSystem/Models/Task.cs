@@ -9,9 +9,9 @@ namespace ProjectManagementSystem.Models
     public class Task
     {
         public int Id { get; set; }
+
         [Required]
         public int ProjectinfoId { get; set; }
-
         public ProjectInfo ProjectInfo { get; set; }
 
         [Required]

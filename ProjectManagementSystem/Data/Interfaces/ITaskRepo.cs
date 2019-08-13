@@ -10,5 +10,8 @@ namespace ProjectManagementSystem.Data.Interfaces
    {
 
        System.Threading.Tasks.Task<ICollection<Task>> GetAllTaskByProjectId(int id);
+       ICollection<Task> GetTaskByProjectId(int id);
+
+
    }
 }

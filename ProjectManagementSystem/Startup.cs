@@ -45,6 +45,7 @@ namespace ProjectManagementSystem
             services.AddTransient<IProjectmanagerRepo,ProjectmanagerRepo>();
             services.AddTransient<IProjectUsersRepo,ProjectUserRepo>();
             services.AddTransient<ITaskRepo,TaskRepo>();
+            services.AddTransient<ICommentRepo,CommentRepo>();
                 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

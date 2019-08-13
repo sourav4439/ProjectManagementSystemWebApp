@@ -1,0 +1,67 @@
+﻿@model ProjectManagementSystem.Models.Comment
+
+@{
+    ViewData["Title"] = "AddComment";
+}
+
+<h1>AddComment</h1>
+
+<h4>Comment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddComment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ProjectInfoId" class="control-label"></label>
+                <select asp-for="ProjectInfoId" class="form-control" asp-items="ViewBag.ProjectInfoId">
+                    <option>Select A Project</option>
+                </select>
+                <span asp-validation-for="ProjectInfoId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaskId" class="control-label"></label>
+                <select asp-for="TaskId" class="form-control">
+                    <option>Select A project</option>
+                </select>
+                <span asp-validation-for="TaskId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Commentdetails" class="control-label"></label>
+                <input asp-for="Commentdetails" class="form-control" />
+                <span asp-validation-for="Commentdetails" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+    $(document).ready(function () {
+        $("#ProjectInfoId").change(function () {
+            $("#TaskId").empty();
+            var projectInfoId = $("#ProjectInfoId").val();
+            /**/
+            $.getJSON({ url:"/Project/GetTaskByProjectId" },
+        /**/
+        {id: projectInfoId },
+        function (data) {
+            $("#TaskId").append('<option>--Select a Task--</option>');
+            $.each(data,
+                function (key, value) {
+
+                    $("#TaskId").append('<option value=' + value.id + '>' + value.description + '</option>');
+
+                });
+
+
+        });
+});
+
+});
+</script>
+}

@@ -20,15 +20,17 @@ namespace ProjectManagementSystem.Controllers
         private readonly IProjectUsersRepo _projectUsersRepo;
         private readonly IProjectmanagerRepo _projectmanagerRepo;
         private readonly ITaskRepo _taskRepo;
+        private readonly ICommentRepo _commentRepo;
 
         public ProjectController(UserManager<ApplicationUsers> userManager,
             IProjectUsersRepo projectUsersRepo,
-            IProjectmanagerRepo projectmanagerRepo,ITaskRepo taskRepo)
+            IProjectmanagerRepo projectmanagerRepo,ITaskRepo taskRepo,ICommentRepo commentRepo)
         {
             _userManager = userManager;
             _projectUsersRepo = projectUsersRepo;
             _projectmanagerRepo = projectmanagerRepo;
             _taskRepo = taskRepo;
+            _commentRepo = commentRepo;
         }
         public IActionResult ViewProjects()
         {
@@ -60,7 +62,7 @@ namespace ProjectManagementSystem.Controllers
             
         }
         [HttpPost]
-        public IActionResult CreateTask([Bind("ApplicationUserId,ProjectinfoId","Description"," DueDate", "Priority")] Task task)
+        public IActionResult CreateTask([Bind("ApplicationUsersId,ProjectinfoId","Description"," DueDate", "Priority")] Task task)
         {
             if (ModelState.IsValid)
             {
@@ -70,5 +72,31 @@ namespace ProjectManagementSystem.Controllers
 
             return View();
         }
+        [HttpGet]
+        public IActionResult AddComment()
+        {
+            var userId = _userManager.GetUserId(User);
+            ViewBag.ProjectInfoId = _projectUsersRepo.GetprojectByUserId(userId).Select(p => new SelectListItem { Value = p.ProjectInfoId.ToString(), Text = p.ProjectInfo.Name }).ToList();
+            
+            return View();
+           
+        }
+        [HttpPost]
+        public IActionResult AddComment([Bind("ProjectInfoId", "TaskId", "Commentdetails")]Comment comment)
+        {
+            if (ModelState.IsValid)
+            {
+                _commentRepo.Create(comment);
+                return View();
+            }
+            return View();
+        }
+
+        public JsonResult GetTaskByProjectId(int id)
+        {
+            var subtag = _taskRepo.GetTaskByProjectId(id);
+            return Json(subtag);
+        }
+
     }
 }

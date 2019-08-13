@@ -23,6 +23,7 @@ namespace ProjectManagementSystem.Data
 
         public DbSet<ProjectInfoUsers> ProjectInfoUserses { get; set; }
         public DbSet<Task> Tasks { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

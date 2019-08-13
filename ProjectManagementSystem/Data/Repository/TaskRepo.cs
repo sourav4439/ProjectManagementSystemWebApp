@@ -19,5 +19,10 @@ namespace ProjectManagementSystem.Data.Repository
            return await db.Tasks.Where(p=>p.ProjectinfoId==id).Include(u=>u.ApplicationUsers).ToListAsync();
 
         }
+        public  ICollection<Task> GetTaskByProjectId(int id)
+        {
+            return  db.Tasks.Where(p => p.ProjectinfoId == id).ToList();
+
+        }
     }
 }
