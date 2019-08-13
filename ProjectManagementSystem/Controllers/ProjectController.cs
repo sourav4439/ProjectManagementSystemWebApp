@@ -38,7 +38,7 @@ namespace ProjectManagementSystem.Controllers
            
             return View(projectview);
         }
-
+        [HttpGet]
         public IActionResult ProjectDetails(int id)
         {
             var project = _projectmanagerRepo.GetById(id);

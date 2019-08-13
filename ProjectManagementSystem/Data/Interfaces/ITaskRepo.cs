@@ -7,6 +7,8 @@ using Task = ProjectManagementSystem.Models.Task;
 namespace ProjectManagementSystem.Data.Interfaces
 {
    public interface ITaskRepo:IRepository<Task>
-    {
-    }
+   {
+
+       System.Threading.Tasks.Task<ICollection<Task>> GetAllTaskByProjectId(int id);
+   }
 }

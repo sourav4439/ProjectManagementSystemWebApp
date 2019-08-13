@@ -21,6 +21,7 @@ namespace ProjectManagementSystem.Models
         public string Designation { get; set; }
 
         public virtual ICollection<ProjectInfoUsers> ProjectInfoUserses { get; set; }
+        
 
 
 

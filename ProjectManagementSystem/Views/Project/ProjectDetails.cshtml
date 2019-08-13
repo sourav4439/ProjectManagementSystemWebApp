@@ -61,6 +61,8 @@
     </dl>
 </div>
 <div>
+
+    @await Component.InvokeAsync("TaskList", new { id = Model.Id })
     <a asp-action="CreateTask" asp-route-projectid="@Model.Id">CreateTask</a> |
-   
+
 </div>
