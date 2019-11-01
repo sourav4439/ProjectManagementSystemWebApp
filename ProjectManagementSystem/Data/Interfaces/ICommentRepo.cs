@@ -7,6 +7,7 @@ using ProjectManagementSystem.Models;
 namespace ProjectManagementSystem.Data.Interfaces
 {
    public interface ICommentRepo:IRepository<Comment>
-    {
-    }
+   {
+       IEnumerable<Comment> GetCommentsByTaskId(int id);
+   }
 }

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ProjectManagementSystem.Models.Comment>
+
+@{
+    ViewData["Title"] = "ViewAllCommentByTaskId";
+}
+
+<h1>ViewAllCommentByTaskId</h1>
+
+<p>
+    <a asp-action="AddComment">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectInfo)
+            </th>
+            <th>
+                Comment By
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Commentdetails)
+            </th>
+            <th>@Html.DisplayNameFor(model => model.DateTime)</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectInfo.CodeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUsers.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Commentdetails)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.DateTime)
+                </td>
+        </tr>
+}
+    </tbody>
+</table>

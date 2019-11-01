@@ -9,6 +9,7 @@
     <Compile Remove="Migrations\20190726035743_SeedUserRole.cs" />
     <Compile Remove="Migrations\20190728171144_ModifyProjectUserTable.cs" />
     <Compile Remove="Migrations\20190804185723_AddTask.cs" />
+    <Compile Remove="Migrations\20191101160909_AddUserIdInCommentModel.cs" />
   </ItemGroup>
 
 

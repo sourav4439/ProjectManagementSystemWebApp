@@ -1,4 +1,5 @@
 ﻿@model ProjectManagementSystem.Models.Comment
+@inject UserManager<ApplicationUsers> UserManager
 
 @{
     ViewData["Title"] = "AddComment";
@@ -31,6 +32,8 @@
                 <input asp-for="Commentdetails" class="form-control" />
                 <span asp-validation-for="Commentdetails" class="text-danger"></span>
             </div>
+            <input type="hidden" asp-for="DateTime" value="@DateTime.Now"/>
+            <input type="hidden" asp-for="ApplicationUsersId" value="@UserManager.GetUserId(User)"/>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

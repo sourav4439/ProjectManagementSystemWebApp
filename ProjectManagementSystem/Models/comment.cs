@@ -17,6 +17,12 @@ namespace ProjectManagementSystem.Models
         public Task Task { get; set; }
         [Required]
         public string Commentdetails { get; set; }
+        [Required]
+        public string DateTime { get; set; }
+        [Required]
+        public string ApplicationUsersId { get; set; }
+        public ApplicationUsers ApplicationUsers { get; set; }
+
 
     }
 }

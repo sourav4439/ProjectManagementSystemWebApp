@@ -67,10 +67,10 @@ namespace ProjectManagementSystem.Controllers
             if (ModelState.IsValid)
             {
                 _taskRepo.Create(task);
-                return RedirectToAction("ProjectDetails","Project",new {id=task.ProjectinfoId});
+                return RedirectToAction("ProjectDetails","Project",new {id= task.ProjectinfoId});
             }
 
-            return View();
+            return RedirectToAction("CreateTask", new {projectid = task.ProjectinfoId});
         }
         [HttpGet]
         public IActionResult AddComment()
@@ -82,14 +82,21 @@ namespace ProjectManagementSystem.Controllers
            
         }
         [HttpPost]
-        public IActionResult AddComment([Bind("ProjectInfoId", "TaskId", "Commentdetails")]Comment comment)
+        public IActionResult AddComment([Bind("ProjectInfoId", "TaskId", "Commentdetails","DateTime", "ApplicationUsersId")]Comment comment)
         {
             if (ModelState.IsValid)
             {
                 _commentRepo.Create(comment);
-                return View();
+                return RedirectToAction("ViewAllCommentByTaskId",new{id=comment.TaskId});
             }
-            return View();
+            return View(comment);
+        }
+        [HttpGet]
+        public IActionResult ViewAllCommentByTaskId(int id)
+        {
+            var comments = _commentRepo.GetCommentsByTaskId(id);
+            return View(comments);
+
         }
 
         public JsonResult GetTaskByProjectId(int id)

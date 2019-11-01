@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectManagementSystem.Data;
 
 namespace ProjectManagementSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191101152309_CommentDateTime")]
+    partial class CommentDateTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -200,9 +202,6 @@ namespace ProjectManagementSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ApplicationUsersId")
-                        .IsRequired();
-
                     b.Property<string>("Commentdetails")
                         .IsRequired();
 
@@ -214,8 +213,6 @@ namespace ProjectManagementSystem.Migrations
                     b.Property<int>("TaskId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUsersId");
 
                     b.HasIndex("ProjectInfoId");
 
@@ -347,11 +344,6 @@ namespace ProjectManagementSystem.Migrations
 
             modelBuilder.Entity("ProjectManagementSystem.Models.Comment", b =>
                 {
-                    b.HasOne("ProjectManagementSystem.Models.ApplicationUsers", "ApplicationUsers")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUsersId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("ProjectManagementSystem.Models.ProjectInfo", "ProjectInfo")
                         .WithMany()
                         .HasForeignKey("ProjectInfoId")
