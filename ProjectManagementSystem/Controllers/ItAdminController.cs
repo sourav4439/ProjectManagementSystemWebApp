@@ -50,7 +50,7 @@ namespace ProjectManagementSystem.Controllers
         // GET: ItAdmin/Create
         public ActionResult AddUser()
         {
-            ViewBag.designation=_role.Roles.Select(r=> new SelectListItem{Value = r.Id,Text = r.Name}).ToList();
+            ViewBag.designation = _role.Roles.Select(r => new SelectListItem { Value = r.Id, Text = r.Name }).ToList();
             return View();
         }
 
@@ -162,32 +162,40 @@ namespace ProjectManagementSystem.Controllers
             return View();
         }
 
-        
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteUser(string id)
         {
-            try
+            var user = await _usermanager.FindByIdAsync(id);
+            if (user == null)
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
+                ViewBag.errormassage = "uuser Not Found";
+                return View("NotFound");
             }
-            catch
+            else
             {
-                return View();
+                var result = await _usermanager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View("Index");
             }
         }
 
 
 
 
-      
-}
+
+    }
 
 }

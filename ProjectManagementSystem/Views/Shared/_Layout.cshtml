@@ -138,7 +138,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="logo-area">
-                        <a asp-action="home" asp-controller="Home"><img src="~/img/logo/logo.png" alt="" /></a>
+                        <a asp-action="home" asp-controller="Home">Project Management</a>
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
@@ -498,7 +498,7 @@
                         @if (SignInManager.IsSignedIn(User) && User.IsInRole("ItAdmin"))
                         {
                             <li class="nav-item">
-                                <a asp-area="" asp-controller="ItAdmin" asp-action="Index"><i class="notika-icon notika-house">User List</i></a>
+                                <a asp-area="" asp-controller="ItAdmin" asp-action="Index"><span class="glyphicon glyphicon-user"> UserList</span></a>
                             </li>
                         }
                         @if (SignInManager.IsSignedIn(User) && User.IsInRole("Projectmanager"))
@@ -570,8 +570,9 @@
         </div>
         </div>
             <!-- Main Menu area End-->
-
-            @RenderBody()
+    <div class="container">
+        @RenderBody()
+    </div>
             <!-- Start Status area -->
           
             <!-- Start Footer area-->
