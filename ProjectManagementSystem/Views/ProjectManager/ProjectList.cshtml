@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ProjectManagementSystem.Models.ProjectInfo>
+
+@{
+    ViewData["Title"] = "Project List";
+}
+
+
+
+<p>
+    <a class="btn btn-primary notika-btn-primary waves-effect" asp-action="AddProject">ADD PROJECT <span class="glyphicon glyphicon-plus"></span></a>
+</p>
+<div class="row">
+    @foreach (var item in Model)
+    {
+
+        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12" style="margin-top:18px" ;>
+            <div class="contact-list">
+                @*<div class="contact-win">
+                    <div class="contact-img">
+                        <img src="img/post/1.jpg" alt="" />
+                    </div>
+                    <div class="conct-sc-ic">
+                        <a class="btn" href="#"><i class="notika-icon notika-facebook"></i></a>
+                        <a class="btn" href="#"><i class="notika-icon notika-twitter"></i></a>
+                        <a class="btn" href="#"><i class="notika-icon notika-pinterest"></i></a>
+                    </div>
+                </div>*@
+                <div class="contact-ctn">
+                    <div class="contact-ad-hd">
+                        <h2>PName: @item.Name</h2>
+                        <p class="ctn-ads">Code Name: @item.CodeName</p>
+                    </div>
+                    <h6>Start Date: @item.Status</h6>
+                    <h6>Start Date: @item.StartDate</h6>
+                    <h6>End Date: @item.Enddate</h6>
+                    <h6>Duration: @item.Duration Days</h6>
+                </div>
+                <div class="social-st-list">
+                    <a asp-action="EditProject" style="width:115px" asp-route-id="@item.Id" class="btn btn-success">Edit</a>
+
+                    <button type="button" class="btn nk-red btn-info" style="width:115px" data-toggle="modal" data-target="#myModalnine">Delete</button>
+                    <div class="modal fade" id="myModalnine" role="dialog">
+                        <div class="modal-dialog modals-default nk-red">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <h1>Are You Sure Delete Following Project</h1>
+                                    <h2>Project Name: @item.Name</h2>
+                                   
+
+                                </div>
+                                <div class="modal-footer">
+                                    <form asp-action="DeleteProject" asp-route-id="@item.Id" method="post">
+                                        <button type="submit" class="btn btn-success">ok</button>
+                                    </form>
+                                    <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

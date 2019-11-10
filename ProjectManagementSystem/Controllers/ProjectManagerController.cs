@@ -30,7 +30,7 @@ namespace ProjectManagementSystem.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public IActionResult ProjectList()
         {
             var project = _projectmanagerRepo.GetAll();
             return View(project);
@@ -42,14 +42,16 @@ namespace ProjectManagementSystem.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult AddProject(ProjectInfo projectInfo)
         {
             string uploadfilename = null;
             if (projectInfo.Uploadfile != null)
             {
-                string userphotofolder = Path.Combine(_iHostingEnvironment.WebRootPath,"ProjectFile");
-                uploadfilename = Guid.NewGuid().ToString() + "_" + projectInfo.Name+"_" + projectInfo.Uploadfile.FileName;
+                string userphotofolder = Path.Combine(_iHostingEnvironment.WebRootPath, "ProjectFile");
+                uploadfilename = Guid.NewGuid().ToString() + "_" + projectInfo.Name + "_" +
+                                 projectInfo.Uploadfile.FileName;
                 string filepath = Path.Combine(userphotofolder, uploadfilename);
                 projectInfo.Uploadfile.CopyTo(new FileStream(filepath, FileMode.Create));
             }
@@ -58,16 +60,19 @@ namespace ProjectManagementSystem.Controllers
             if (ModelState.IsValid)
             {
                 _projectmanagerRepo.Create(projectInfo);
-                return RedirectToAction("Index");
+                return RedirectToAction("ProjectList");
             }
+
             return View();
         }
+
         [HttpGet]
         public IActionResult EditProject(int id)
         {
-          var project=  _projectmanagerRepo.GetById(id);
+            var project = _projectmanagerRepo.GetById(id);
             return View(project);
         }
+
         [HttpPost]
         public IActionResult EditProject(ProjectInfo projectInfo)
         {
@@ -75,7 +80,8 @@ namespace ProjectManagementSystem.Controllers
             if (projectInfo.Uploadfile != null)
             {
                 string userphotofolder = Path.Combine(_iHostingEnvironment.WebRootPath, "ProjectFile");
-                uploadfilename = Guid.NewGuid().ToString() + "_"+projectInfo.Name+"_" + projectInfo.Uploadfile.FileName;
+                uploadfilename = Guid.NewGuid().ToString() + "_" + projectInfo.Name + "_" +
+                                 projectInfo.Uploadfile.FileName;
                 string filepath = Path.Combine(userphotofolder, uploadfilename);
                 projectInfo.Uploadfile.CopyTo(new FileStream(filepath, FileMode.Create));
             }
@@ -84,27 +90,44 @@ namespace ProjectManagementSystem.Controllers
             if (ModelState.IsValid)
             {
                 _projectmanagerRepo.Update(projectInfo);
-                return RedirectToAction("Index");
+                return RedirectToAction("ProjectList");
             }
+
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult DeleteProject(int id)
+        {
+            var project = _projectmanagerRepo.GetById(id);
+            if (project == null)
+            {
+                ViewBag.errormassage = "project Not Found";
+                return View("NotFound");
+            }
+            _projectmanagerRepo.Delete(project);
+            return RedirectToAction("ProjectList");
+
+
+
         }
 
 
         [HttpGet]
         public IActionResult AssignResourcePerson()
         {
-            ViewBag.ApplicationUserId=_userManager.Users.Select(u=>new SelectListItem{Value = u.Id,Text = u.Name}).ToList();
-            ViewBag.ProjectInfoId = _projectmanagerRepo.GetAll().Select(p=>new SelectListItem{Value = p.Id.ToString(),Text = p.Name}).ToList();
+            ViewBag.ApplicationUserId = _userManager.Users.Select(u => new SelectListItem { Value = u.Id, Text = u.Name }).ToList();
+            ViewBag.ProjectInfoId = _projectmanagerRepo.GetAll().Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name }).ToList();
             return View();
         }
         [HttpPost]
         public IActionResult AssignResourcePerson([Bind("ApplicationUserId,ProjectInfoId")] ProjectInfoUsers pusers)
         {
-           
+
             if (ModelState.IsValid)
             {
-              _projectUsersRepo.Create(pusers);
-              return RedirectToAction("AssignResourcePersonList");
+                _projectUsersRepo.Create(pusers);
+                return RedirectToAction("AssignResourcePersonList");
             }
             ViewBag.ApplicationUserId = _userManager.Users.Select(u => new SelectListItem { Value = u.Id, Text = u.Name }).ToList();
             ViewBag.ProjectInfoId = _projectmanagerRepo.GetAll().Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name }).ToList();
