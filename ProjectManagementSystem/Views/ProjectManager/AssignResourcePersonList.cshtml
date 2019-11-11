@@ -4,41 +4,29 @@
     ViewData["Title"] = "AssignResourcePersonList";
 }
 
-<h1>AssignResourcePersonList</h1>
 
 <p>
-    <a asp-action="AssignResourcePerson">Create New</a>
+    <a class="btn btn-primary notika-btn-primary waves-effect" asp-action="AssignResourcePerson">ASSIGN RESOURSE PERSON  <span class="glyphicon glyphicon-plus"></span></a>
 </p>
-<table class="table">
-    <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProjectInfo.Name)
-        </th>
-        <th>
-            Resource Person
-        </th>
+<div class="row">
+    @foreach (var item in Model)
+    {
 
+        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12" style="margin-top:18px" ;>
+            <div class="contact-list">
+               
+                <div class="contact-ctn">
+                    <div class="contact-ad-hd">
+                        <h1 style="color: darkolivegreen;text-align: center">Project Name</h1>
+                         <h4 style="color:firebrick;text-align: center">@item.ProjectInfo.Name</h4>
+                        <h5>Resourse Person: @item.ApplicationUsers.Name</h5>
+                        <h5>Designation: @item.ApplicationUsers.Designation</h5>
+                    </div>
+                    
+                </div>
+               
+            </div>
+        </div>
+    }
+</div>
 
-        <th>@Html.DisplayNameFor(model => model.ApplicationUsers.Designation)</th>
-        
-    </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProjectInfo.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ApplicationUsers.Name)
-        </td>
-
-        <td>
-            @Html.DisplayFor(modelItem => item.ApplicationUsers.Designation)
-        </td>
-       
-    </tr>
-}
-    </tbody>
-</table>
