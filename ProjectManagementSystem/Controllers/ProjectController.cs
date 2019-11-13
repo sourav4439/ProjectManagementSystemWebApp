@@ -54,7 +54,7 @@ namespace ProjectManagementSystem.Controllers
             ViewBag.Projectid=projectid;
 
             ViewBag.ApplicationUserId = _projectUsersRepo.GetuserbyprojectId(projectid)
-                   .Select(u => new SelectListItem { Value = u.ApplicationUserId, Text = u.ApplicationUsers.Name })
+                   .Select(u => new SelectListItem { Value = u.ApplicationUsersId, Text = u.ApplicationUsers.Name })
                    .ToList();
             ViewBag.ProjectInfoId = _projectUsersRepo.GetprojectByUserId(userId).Select(p => new SelectListItem { Value = p.ProjectInfoId.ToString(), Text = p.ProjectInfo.Name }).ToList();
                return View();

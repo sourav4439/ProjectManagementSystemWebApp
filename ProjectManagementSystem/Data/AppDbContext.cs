@@ -28,12 +28,12 @@ namespace ProjectManagementSystem.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<ProjectInfoUsers>().HasKey(pu => new { pu.ApplicationUserId, pu.ProjectInfoId });
+            builder.Entity<ProjectInfoUsers>().HasKey(pu => new { pu.ApplicationUsersId, pu.ProjectInfoId });
 
            builder.Entity<ProjectInfoUsers>()
                 .HasOne<ApplicationUsers>(a => a.ApplicationUsers)
                 .WithMany(s => s.ProjectInfoUserses)
-                .HasForeignKey(sc => sc.ApplicationUserId);
+                .HasForeignKey(sc => sc.ApplicationUsersId);
 
 
             builder.Entity<ProjectInfoUsers>()

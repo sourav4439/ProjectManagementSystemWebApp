@@ -25,7 +25,7 @@ namespace ProjectManagementSystem.Data.Repository
         public ICollection<ProjectInfoUsers> GetprojectByUserId(string userId)
         {
            return db.ProjectInfoUserses.Include(p => p.ProjectInfo)
-                .Where(u => u.ApplicationUserId == userId).ToList();
+                .Where(u => u.ApplicationUsersId == userId).ToList();
         }
 
         public ICollection<ProjectInfoUsers> GetuserbyprojectId(int projectId)
@@ -37,7 +37,7 @@ namespace ProjectManagementSystem.Data.Repository
 
         public bool IsAssigned(string userid, int projectid)
         {
-            return db.ProjectInfoUserses.Any(p => p.ApplicationUserId == userid && p.ProjectInfoId == projectid);
+            return db.ProjectInfoUserses.Any(p => p.ApplicationUsersId == userid && p.ProjectInfoId == projectid);
         }
     }
 }

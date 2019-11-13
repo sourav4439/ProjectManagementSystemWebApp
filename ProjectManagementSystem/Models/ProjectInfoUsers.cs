@@ -12,7 +12,7 @@ namespace ProjectManagementSystem.Models
     {
 
         [Required]
-        public string ApplicationUserId { get; set; }
+        public string ApplicationUsersId { get; set; }
         
         public virtual ApplicationUsers ApplicationUsers { get; set; }
         [Required]
