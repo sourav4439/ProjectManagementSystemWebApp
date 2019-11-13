@@ -1,44 +1,36 @@
 ﻿@model IEnumerable<ProjectManagementSystem.Models.ProjectInfoUsers>
 @inject IProjectUsersRepo ProjectUsersRepo
+@inject ITaskRepo TaskRepo
 
 @{
     ViewData["Title"] = "ViewProjects";
 }
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectInfo.Name)
-            </th>
-            <th>
-               Short Name
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectInfo.Status)
-            </th>
-            <th>No Of Member</th>
-            <th>No Of Task</th>
-            <th>Details</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectInfo.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectInfo.CodeName)
-            </td>
-            <td>@Html.DisplayFor(modelItem => item.ProjectInfo.Status)</td>
-            <td>@ProjectUsersRepo.Count(p => p.ProjectInfoId == item.ProjectInfoId)</td>
-            <td>@ProjectUsersRepo.Count(p => p.ProjectInfoId == item.ProjectInfoId)</td>
-            <td><a asp-action="ProjectDetails" asp-controller="Project" asp-route-id="@item.ProjectInfoId">View</a></td>
-        </tr>
-        
-}
-    </tbody>
-</table>
+<div class="row">
+    @foreach (var item in Model)
+    {
+
+        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12" style="margin-top:18px" ;>
+            <div class="contact-list">
+
+                <div class="contact-ctn">
+                    <div class="contact-ad-hd">
+                        <h1 style="color: darkolivegreen;text-align: center">Project Name</h1>
+                        <h4 style="color:firebrick;text-align: center">@item.ProjectInfo.Name</h4>
+                        <h5>Short Name: @item.ProjectInfo.CodeName</h5>
+                        <h5>Status: @item.ProjectInfo.Status</h5>
+                        <h5>No Of Members: @ProjectUsersRepo.Count(p => p.ProjectInfoId == item.ProjectInfoId)</h5>
+                        <h5>No Of Task: @TaskRepo.Count(p => p.ProjectinfoId == item.ProjectInfoId)</h5>
+                    </div>
+
+                </div>
+                <div class="social-st-list">
+                    <a asp-action="ProjectDetails" style="width:115px" asp-route-id="@item.ProjectInfoId" class="btn btn-success">Project Details</a>
+
+                </div>
+                </div>
+            </div>
+    }
+</div>
+
