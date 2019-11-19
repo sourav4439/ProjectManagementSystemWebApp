@@ -9,68 +9,87 @@
     var projecid = ViewBag.Projectid;
 }
 @section Style
-{
-
-    <link href="~/lib/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet" />
+    {
+    <link href="~/css/bootstrap-select/bootstrap-select.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/datapicker/datepicker3.css" rel="stylesheet" asp-append-version="true" />
 }
+
+
+
 @if (ProjectUsersRepo.IsAssigned(userId, projecid))
 {
-    <h1>CreateTask</h1>
+    <h3 style="margin-left:610px;color:#9C27B0">Create Task</h3>
 
-    <h4>Task</h4>
-    <hr/>
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="CreateTask">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="ProjectinfoId" class="control-label"></label>
-                    <select asp-for="ProjectinfoId" class="form-control" asp-items="ViewBag.ProjectinfoId">
-                        <option>Select A Project</option>
-                    </select>
-                    <span asp-validation-for="ProjectinfoId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ApplicationUsersId" class="control-label"></label>
-                    <select asp-for="ApplicationUsersId" class="form-control" asp-items="ViewBag.ApplicationUserId">
-                        <option>Select A Member</option>
-                    </select>
+    <form asp-action="CreateTask">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                <div class="form-example-wrap">
+                    <div class="bootstrap-select fm-cmp-mg ">
+                        <label asp-for="ApplicationUsersId" class="control-label"></label>
+                        <select asp-for="ApplicationUsersId" class="selectpicker" asp-items="ViewBag.ApplicationUserId">
+                            <option value="">Select A Resource Person</option>
+                        </select>
+
+                    </div>
                     <span asp-validation-for="ApplicationUsersId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Description" class="control-label"></label>
-                    <input asp-for="Description" class="form-control">
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DueDate" class="control-label"></label>
-                    <input asp-for="DueDate" class="form-control"/>
-                    <span asp-validation-for="DueDate" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Priority" class="control-label"></label>
-                    <input type="radio" asp-for="Priority" value="High"/>High
-                    <input type="radio" asp-for="Priority" value="Medium"/>Medium
-                    <input type="radio" asp-for="Priority" value="Low"/>Low
-                    <span asp-validation-for="Priority" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary"/>
-                </div>
-            </form>
-        </div>
-    </div>
+                    <div class="bootstrap-select fm-cmp-mg ">
+                        <label asp-for="ProjectinfoId" class="control-label"></label>
+                        <select asp-for="ProjectinfoId" class="selectpicker" asp-items="ViewBag.ProjectinfoId">
+                            <option value=""> Select A Project</option>
+                        </select>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+                    </div>
+                    <span asp-validation-for="ProjectinfoId" class="text-danger"></span>
+                    <div class="form-example-int">
+                        <div class="form-group">
+
+                            <label asp-for="Description"></label>
+                            <div class="nk-int-st">
+                                <input asp-for="Description" class="form-control input-sm" placeholder="Name">
+
+                            </div>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-example-int">
+                        <div class="form-group">
+
+                            <label asp-for="DueDate"></label>
+                            <div class="nk-int-st">
+                                <input asp-for="DueDate" class="form-control input-sm" placeholder="Due Date">
+
+                            </div>
+                            <span asp-validation-for="DueDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Priority" class="control-label"></label>
+                        <input type="radio" asp-for="Priority" value="High" />High
+                        <input type="radio" asp-for="Priority" value="Medium" />Medium
+                        <input type="radio" asp-for="Priority" value="Low" />Low
+                        <span asp-validation-for="Priority" class="text-danger"></span>
+                    </div>
+                    <div class="form-example-int mg-t-15">
+                        <button type="submit" class="btn btn-success notika-btn-success">Submit</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
 }
-else{
-    <h1>You cannot create any task you are this project team member</h1>
+else
+{
+    <h1>You cannot create any task you are not this project team member</h1>
 }
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src="~/lib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script src="~/js/bootstrap-select/bootstrap-select.js" asp-append-version="true"></script>
+    <script src="~/js/datapicker/bootstrap-datepicker.js"></script>
+   
     <script type="text/javascript">
         $(document).ready(function () {
             $("#DueDate").datepicker({
@@ -82,7 +101,7 @@ else{
             });
 
             $("#DueDate").datepicker({ dateFormat: 'dd-mm-yy' });
-            
+
 
         });
     </script>
