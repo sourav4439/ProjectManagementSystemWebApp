@@ -11,10 +11,12 @@ namespace ProjectManagementSystem.Models
         public int Id { get; set; }
 
         [Required]
+        [Display(Name = "Project Name")]
         public int ProjectinfoId { get; set; }
         public ProjectInfo ProjectInfo { get; set; }
 
         [Required]
+        [Display(Name = "User Name")]
         public string ApplicationUsersId { get; set; }
 
         public ApplicationUsers ApplicationUsers { get; set; }

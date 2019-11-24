@@ -39,11 +39,16 @@ namespace ProjectManagementSystem.Controllers
             }
             return View(model);
         }
-
+        [HttpPost]
         public async Task<IActionResult> Logout()
         {
            await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
+        }
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

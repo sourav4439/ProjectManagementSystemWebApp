@@ -4,11 +4,7 @@
 @{
     ViewData["Title"] = "AddComment";
 }
-@section Style
-    {
-    <link href="~/css/bootstrap-select/bootstrap-select.css" rel="stylesheet" asp-append-version="true" />
 
-}
 
 <h3 style="margin-left:610px;color:#9C27B0">Add Comment</h3>
 
@@ -19,27 +15,41 @@
             <input type="hidden" asp-for="DateTime" value="@DateTime.Now" />
             <input type="hidden" asp-for="ApplicationUsersId" value="@UserManager.GetUserId(User)" />
             <div class="form-example-wrap">
-                <div class="bootstrap-select fm-cmp-mg ">
-                    <label asp-for="ProjectInfoId" class="control-label"></label>
-                    <select asp-for="ProjectInfoId" class="selectpicker" asp-items="ViewBag.ProjectInfoId">
-                        <option value="">Select A Project</option>
-                    </select>
+                <div class="form-example-int row">
+                <div class="form-group  col-xs-4">
 
-                </div>
-                <span asp-validation-for="ProjectInfoId" class="text-danger"></span>
-                <div class="bootstrap-select fm-cmp-mg ">
-                    <label asp-for="TaskId" class="control-label"></label>
-                    <select asp-for="TaskId" class="selectpicker">
-                        <option value=""> Select A Task</option>
-                    </select>
+                    <div class="nk-int-st">
+                        <label asp-for="ProjectInfoId" class="control-label"></label>
+                        <select asp-for="ProjectInfoId" class="form-control" asp-items="ViewBag.ProjectInfoId">
+                            <option value="">Select A Project</option>
+                        </select>
 
-                </div>
-                <span asp-validation-for="TaskId" class="text-danger"></span>
-                <div class="form-example-int">
+
+
+                    </div>
+                    </div>
+                    <span asp-validation-for="ProjectInfoId" class="text-danger"></span>
+                    </div>
+                <div class="form-example-int row">
+                    <div class="form-group  col-xs-4">
+
+                        <div class="nk-int-st">
+                            <label asp-for="TaskId" class="control-label"></label>
+                            <select asp-for="TaskId" class="form-control">
+                                <option value=""> Select A Task</option>
+                            </select>
+
+
+
+                        </div>
+                        </div>
+                        <span asp-validation-for="TaskId" class="text-danger"></span>
+                    </div><div class="form-example-int">
                     <div class="form-group">
 
-                        <label asp-for="Commentdetails"></label>
+                       
                         <div class="nk-int-st">
+                            <label asp-for="Commentdetails"></label>
                             <input asp-for="Commentdetails" class="form-control input-sm" placeholder="Commentdetails">
 
                         </div>
@@ -56,7 +66,7 @@
 </form>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src="~/js/bootstrap-select/bootstrap-select.js" asp-append-version="true"></script>
+   
     <script asp-append-version="true">
         $(document).ready(function () {
             $("#ProjectInfoId").change(function () {
@@ -71,8 +81,7 @@
                         $.each(data,
                             function (key, value) {
 
-                               //HOW TO GET DATA ID TO IMPLEMENT SELECT LIST???
-
+                                $("#TaskId").append('<option value="'+value.id+'">'+value.description+'</option>');
                             });
 
 

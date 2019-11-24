@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ using ProjectManagementSystem.Models;
 
 namespace ProjectManagementSystem.Controllers
 {
+    [Authorize(Roles = "ProjectManager")]
     public class ProjectManagerController : Controller
     {
         private readonly IProjectmanagerRepo _projectmanagerRepo;

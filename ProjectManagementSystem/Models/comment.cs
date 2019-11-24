@@ -10,9 +10,11 @@ namespace ProjectManagementSystem.Models
     {
         public int Id { get; set; }
         [Required]
+        [Display(Name = "Project Name")]
         public int ProjectInfoId { get; set; }
         public ProjectInfo ProjectInfo { get; set; }
         [Required]
+        [Display(Name = "Tasks")]
         public int TaskId { get; set; }
         public Task Task { get; set; }
         [Required]
@@ -20,6 +22,7 @@ namespace ProjectManagementSystem.Models
         [Required]
         public string DateTime { get; set; }
         [Required]
+        [Display(Name = "User Name")]
         public string ApplicationUsersId { get; set; }
         public ApplicationUsers ApplicationUsers { get; set; }
 
